@@ -25,6 +25,12 @@ class MainActivity : AppCompatActivity() {
         Uri.fromFile(File(applicationContext.cacheDir, "imageName.jpg"))
     }
 
+    private val galleryActivityResult = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        image?.setImageURI(uri)
+    }
+
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -52,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButton() {
         button?.setOnClickListener {
-            getContent.launch(null)
+            galleryActivityResult.launch("image/*")
         }
     }
 
